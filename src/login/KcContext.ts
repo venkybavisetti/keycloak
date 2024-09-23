@@ -7,6 +7,17 @@ export type KcContextExtension = {
     properties: Record<KcEnvName, string> & {};
 };
 
-export type KcContextExtensionPerPage = {};
+export type KcContextExtensionPerPage = {
+    "login-update-phone-number.ftl": {
+        auth: {
+            selectedCredential: string
+        };
+        url: {
+            loginRestartFlowUrl: string;
+            loginAction: string;
+        };
+        phoneNumber:string
+    };
+};
 
 export type KcContext = ExtendKcContext<KcContextExtension, KcContextExtensionPerPage>;

@@ -11,7 +11,19 @@ const kcContextExtension: KcContextExtension = {
         ...kcEnvDefaults
     }
 };
-const kcContextExtensionPerPage: KcContextExtensionPerPage = {};
+
+const kcContextExtensionPerPage: KcContextExtensionPerPage = {
+    "login-update-phone-number.ftl": {
+        auth: {
+            selectedCredential: "test"
+        },
+        url: {
+            loginRestartFlowUrl: "#",
+            loginAction: "#"
+        },
+        phoneNumber: "+9123434334"
+    }
+};
 
 export const { getKcContextMock } = createGetKcContextMock({
     kcContextExtension,

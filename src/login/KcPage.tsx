@@ -4,6 +4,7 @@ import type { KcContext } from "./KcContext";
 import { useI18n } from "./i18n";
 import DefaultPage from "keycloakify/login/DefaultPage";
 import Template from "keycloakify/login/Template";
+import LoginUpdatePhoneNumber from "./pages/LoginUpdatePhoneNumber";
 const UserProfileFormFields = lazy(
     () => import("keycloakify/login/UserProfileFormFields")
 );
@@ -23,6 +24,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "login.ftl":
                         return (
                             <Login
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={true}
+                            />
+                        );
+                    case "login-update-phone-number.ftl":
+                        return (
+                            <LoginUpdatePhoneNumber
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={true}
