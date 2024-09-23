@@ -10,13 +10,13 @@ export type KcContextExtension = {
 export type KcContextExtensionPerPage = {
     "login-update-phone-number.ftl": {
         auth: {
-            selectedCredential: string
+            selectedCredential: string;
         };
         url: {
             loginRestartFlowUrl: string;
             loginAction: string;
         };
-        phoneNumber:string
+        phoneNumber: string;
     };
 };
 

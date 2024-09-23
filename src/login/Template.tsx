@@ -36,10 +36,12 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     }
 
     return (
-        <div className={kcClsx("kcLoginClass")}>
-            <div className="p-6">test</div>
-            <div className={kcClsx("kcFormCardClass")}>
-                <div id="kc-content-wrapper">{children}</div>
+        <div className="bg-[#F0F6FE]">
+            <div className="pt-[80px] pl-[80px]">
+                <img className="w-[174.32px]" src="HDFCLife_Inspire_Logo.svg" alt="HDFCLife Inspire Logo" />
+            </div>
+            <div className="flex items-center justify-center min-h-screen ">
+                <div className="bg-white p-8 rounded-lg shadow-lg">{children}</div>
             </div>
         </div>
     );
