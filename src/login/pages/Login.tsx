@@ -5,16 +5,15 @@ import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import axios from "axios";
+import { Button } from "@digitallabs/one-x-ui";
 
-export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
-    const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-
+const Login: React.FC<PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>> = ({ kcContext, i18n, doUseDefaultCss, Template, classes }) => {
     const { kcClsx } = getKcClsx({
         doUseDefaultCss,
         classes
     });
 
-    const { social, realm, url, usernameHidden, login, registrationDisabled, messagesPerField } = kcContext;
+    const { realm, url, usernameHidden, login, registrationDisabled, messagesPerField } = kcContext;
     const { msg, msgStr } = i18n;
 
     const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
@@ -56,51 +55,14 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                     </div>
                 </div>
             }
-            socialProvidersNode={
-                <>
-                    {realm.password && social?.providers !== undefined && social.providers.length !== 0 && (
-                        <div id="kc-social-providers" className={kcClsx("kcFormSocialAccountSectionClass")}>
-                            <hr />
-                            <h2>{msg("identity-provider-login-label")}</h2>
-                            <ul className={kcClsx("kcFormSocialAccountListClass", social.providers.length > 3 && "kcFormSocialAccountListGridClass")}>
-                                {social.providers.map((...[p, , providers]) => (
-                                    <li key={p.alias}>
-                                        <a
-                                            id={`social-${p.alias}`}
-                                            className={kcClsx(
-                                                "kcFormSocialAccountListButtonClass",
-                                                providers.length > 3 && "kcFormSocialAccountGridItem"
-                                            )}
-                                            type="button"
-                                            href={p.loginUrl}
-                                        >
-                                            {p.iconClasses && <i className={clsx(kcClsx("kcCommonLogoIdP"), p.iconClasses)} aria-hidden="true"></i>}
-                                            <span
-                                                className={clsx(kcClsx("kcFormSocialAccountNameClass"), p.iconClasses && "kc-social-icon-text")}
-                                                dangerouslySetInnerHTML={{ __html: p.displayName }}
-                                            ></span>
-                                        </a>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    )}
-                </>
-            }
         >
             <div>
-                <button
-                    style={{ background: !phoneActivated ? "red" : "", color: !phoneActivated ? "white" : "" }}
-                    onClick={() => setPhoneActivated(false)}
-                >
+                <Button variant={!phoneActivated ? "primary" : "secondary"} color="primary" onClick={() => setPhoneActivated(false)}>
                     Username
-                </button>
-                <button
-                    style={{ background: phoneActivated ? "red" : "", color: phoneActivated ? "white" : "" }}
-                    onClick={() => setPhoneActivated(true)}
-                >
+                </Button>
+                <Button variant={phoneActivated ? "primary" : "secondary"} color="primary" onClick={() => setPhoneActivated(true)}>
                     Mobile number
-                </button>
+                </Button>
             </div>
             <div id="kc-form">
                 <div id="kc-form-wrapper">
@@ -274,4 +236,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             </div>
         </Template>
     );
-}
+};
+
+export default Login;
