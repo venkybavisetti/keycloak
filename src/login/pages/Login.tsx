@@ -5,7 +5,8 @@ import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import axios from "axios";
-import { Button } from "@digitallabs/one-x-ui";
+import { Button, Caption, DisplayText, colors } from "@digitallabs/one-x-ui";
+import { ArrowLeft } from "@phosphor-icons/react";
 
 const Login: React.FC<PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>> = ({ kcContext, i18n, doUseDefaultCss, Template, classes }) => {
     const { kcClsx } = getKcClsx({
@@ -13,11 +14,11 @@ const Login: React.FC<PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18
         classes
     });
 
-    const { realm, url, usernameHidden, login, registrationDisabled, messagesPerField } = kcContext;
+    const { realm, url, usernameHidden, login, messagesPerField } = kcContext;
     const { msg, msgStr } = i18n;
 
     const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
-    const [phoneActivated, setPhoneActivated] = useState(false);
+    const [phoneActivated, setPhoneActivated] = useState(true);
     const [phoneNumber, setPhoneNumber] = useState("");
     const [verificationCode, setVerificationCode] = useState("");
     const [sendButtonText, setSendButtonText] = useState("Send Code");
@@ -35,34 +36,30 @@ const Login: React.FC<PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18
     };
 
     return (
-        <Template
-            kcContext={kcContext}
-            i18n={i18n}
-            doUseDefaultCss={doUseDefaultCss}
-            classes={classes}
-            displayMessage={!messagesPerField.existsError("username", "password")}
-            headerNode={msg("loginAccountTitle")}
-            displayInfo={realm.password && realm.registrationAllowed && !registrationDisabled}
-            infoNode={
-                <div id="kc-registration-container">
-                    <div id="kc-registration">
-                        <span>
-                            {msg("noAccount")}{" "}
-                            <a tabIndex={8} href={url.registrationUrl}>
-                                {msg("doRegister")}
-                            </a>
-                        </span>
-                    </div>
-                </div>
-            }
-        >
+        <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} headerNode="Login">
+            <div className="flex">
+                <ArrowLeft size={20} color={colors.primary.blue[500]} />
+                <Caption fontWeight="regular" size="lg">
+                    Back
+                </Caption>
+            </div>
             <div className="">
-                <div>
-                    <Button variant={!phoneActivated ? "primary" : "secondary"} color="primary" onClick={() => setPhoneActivated(false)}>
-                        Username
-                    </Button>
-                    <Button variant={phoneActivated ? "primary" : "secondary"} color="primary" onClick={() => setPhoneActivated(true)}>
+                <div className="bg-[#FEF2F1] rounded-full">
+                    <Button
+                        className="rounded-full p-3"
+                        // variant={phoneActivated ? "primary" : "link"}
+                        // color={phoneActivated ? "primary" : "gray"}
+                        onClick={() => setPhoneActivated(true)}
+                    >
                         Mobile number
+                    </Button>
+                    <Button
+                        className="rounded-full p-3"
+                        // variant={!phoneActivated ? "primary" : "link"}
+                        // color={!phoneActivated ? "primary" : "gray"}
+                        onClick={() => setPhoneActivated(false)}
+                    >
+                        Username
                     </Button>
                 </div>
                 <div id="kc-form">
@@ -83,7 +80,7 @@ const Login: React.FC<PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18
                                     <div>
                                         <div className={kcClsx("kcFormGroupClass")}>
                                             <label htmlFor="phoneNumber" className={kcClsx("kcLabelClass")}>
-                                                {msg("phoneNumber")}
+                                                <DisplayText fontWeight="regular">Mobile number</DisplayText>
                                             </label>
                                             <input
                                                 tabIndex={0}
